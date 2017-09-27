@@ -8,21 +8,20 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { logger } from 'redux-logger';
+import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
-import uuid4 from './helpers/uuid';
 import categories from './reducers/categories';
+import posts from './reducers/posts';
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const rootReducer =  combineReducers({ categories });
-
-console.log(uuid4());
+const rootReducer =  combineReducers({ categories, posts });
 
 const store = createStore(
   rootReducer,
   composeEnhancers(
-    applyMiddleware(logger)
+    applyMiddleware(thunk, logger)
   )
 );
 

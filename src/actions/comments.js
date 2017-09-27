@@ -1,13 +1,14 @@
 //@ts-check
+import { fetchHeader } from '../fetchHeader'
 
-export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
-export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS';
+export const FETCH_COMMENTS_BY_POST = 'FETCH_COMMENTS_BY_POST';
+export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
 
-export const fetchAllcomments = () => ({
-  type: FETCH_ALL_COMMENTS
-});
-
-export const receiveAllcomments = (comments) => ({
-  type: RECEIVE_ALL_COMMENTS,
-  comments
-});
+export const fetchCommentsByPost = (dispatch, id) => {
+  fetch(`http://localhost:3001/posts/${id}/comments`, fetchHeader)
+    .then(response => response.json())
+    .then(data =>
+      dispatch({ type: RECEIVE_COMMENTS_BY_POST, categories: data.categories })
+    )
+  dispatch({ type: FETCH_COMMENTS_BY_POST });
+};

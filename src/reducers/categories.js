@@ -1,8 +1,7 @@
 //@ts-check
-
 import { FETCH_CATEGORIES, RECEIVE_CATEGORIES } from '../actions/categories';
 
-const initialState = { isLoading: false }
+const initialState = { isLoading: false, byId: {}, allIds: [] }
 
 const categories = (state = initialState, action) => {
   switch (action.type) {
