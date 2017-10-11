@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Nav, NavItem } from 'react-bootstrap';
-import { Route } from 'react-router-dom';
 import { fetchAllCategories } from '../actions/categories';
 import { fetchAllPosts } from '../actions/posts';
 import { fetchCommentsByPost } from '../actions/comments'
 import { objectToArray } from '../helpers/functions';
+import { Grid, Row, Col } from 'react-bootstrap';
+import Title from './Title';
+import CategoriesNavMenu from './CategoriesNavMenu'
 
 class Home extends React.Component {
   state = {}
@@ -16,32 +17,26 @@ class Home extends React.Component {
   }
 
   render() {
-    return <Route render={({ history }) => (
-      <div>
-        <h3>Home</h3>
-        <p>Categories</p>
-        <Nav>
-          {this.props.categories.map(cat =>
-            <NavItem onClick={() => { history.push(cat.name) }}>
-              {cat.name}
-            </NavItem>
-          )}
-        </Nav>
-        <p>Posts</p>
-        <Nav>
-          {this.props.posts.map(post =>
-            <NavItem onClick={() => { history.push(`/${post.category}/${post.id}`) }}>
-              {post.title}
-            </NavItem>
-          )}
-        </Nav>
+    return <div>
+        <Title />
+        <CategoriesNavMenu history={this.props.history} categories={this.props.categories} />
+        <Grid fluid>
+          <Row>
+            <Col className="navmenu-container" md={2}>
+            </Col>
+            <Col md={10}>
+              {this.props.children}
+            </Col>
+          </Row>
+        </Grid>
       </div>
-    )} />
+    
   }
 }
 
-const mapStateToProps = ({ categories, posts }) => {
+const mapStateToProps = ({ categories, posts }, ownProps) => {
   return {
+    history: ownProps.history,
     categories: objectToArray(categories.byId),
     posts: objectToArray(posts.byId)
   }
