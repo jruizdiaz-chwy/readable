@@ -9,6 +9,7 @@ const posts = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ALL_POSTS:
       return {
+        ...state,
         isLoading: true
       }
     case RECEIVE_ALL_POSTS:
