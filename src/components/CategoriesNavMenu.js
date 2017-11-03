@@ -20,10 +20,10 @@ export const CategoriesNavMenu = (props) => {
               {cat.name}
             </NavItem>
           )}
-          <Navbar.Form className="text-center">
-            <Button type="submit" className="new-post-button">New Post</Button>
-          </Navbar.Form>
         </Nav>
+        <div className="text-center">
+          <Button className="new-post-button ">New Post</Button>
+        </div>
       </Navbar.Collapse>
     </Navbar>
   );
