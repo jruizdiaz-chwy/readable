@@ -50,7 +50,34 @@ body {
   height: 45px;
 }
 
+.navbar-container .container {
+  padding: 0;
+}
+
+.navbar-header {
+  padding-left: 15px;
+}
+
+.navbar-collapse {
+  padding: 0;
+}
+
+.navbar-nav {
+  padding: 0;
+}
+
+.navbar-collapse li {
+  width: 100%;
+  color: #777;
+}
+
+.navbar-collapse li:hover {
+  background-color: rgb(190, 190, 190)
+}
+
 .new-post-button {
+  margin-top: 15px;
+  margin-bottom: 5px;
   width: 80%;
 }
 
@@ -88,8 +115,9 @@ body {
   }
 
   .navbar {
+    margin: 0;
     position: absolute;
-    height: 100%;
+    height: calc(100% - 45px);
     width: calc(15% - 10px);
     border-right: 1px solid #B4B4B4;
     border-radius: 0;
@@ -102,10 +130,6 @@ body {
   .navbar .container {
     width: 100%;
     height: 40px;
-  }
-
-  .navbar-collapse li {
-    width: 100%;
   }
 
   .category-title {
@@ -176,5 +200,9 @@ body {
 
 .post-item {
   margin-bottom: 30px;
+}
+
+.vote-score {
+  margin-left: 5px;
 }
 
