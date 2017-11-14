@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
+import { push } from 'react-router-redux'
+import { objectToArray } from '../helpers/functions';
 
 export const CategoriesNavMenu = (props) => {
   return (
@@ -11,12 +14,12 @@ export const CategoriesNavMenu = (props) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav>
-          <NavItem className="text-center" key="all" onClick={() => { props.history.push('/') }}>
+        <Nav stacked>
+          <NavItem className="text-center" key="all" onClick={() => { props.goHome() }}>
             all
           </NavItem>
           {props.categories.map(cat =>
-            <NavItem className="text-center" key={cat.name} onClick={() => { props.history.push(cat.name) }}>
+            <NavItem className="text-center" key={cat.name} onClick={() => { props.goToCategory(cat.name) }}>
               {cat.name}
             </NavItem>
           )}
@@ -29,5 +32,16 @@ export const CategoriesNavMenu = (props) => {
   );
 }
 
-export default CategoriesNavMenu;
+const mapStateToProps = ({ categories }, ownProps) => {
+  return {
+    categories: objectToArray(categories.byId),
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  goHome: () => dispatch(push('/')),
+  goToCategory: (name) => dispatch(push(name))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesNavMenu);
 

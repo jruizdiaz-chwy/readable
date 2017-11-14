@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPostById } from '../actions/posts'
+import CategoryTitle from './CategoryTitle';
 
 class PostDetail extends React.Component {
   componentDidMount() {
@@ -8,12 +9,13 @@ class PostDetail extends React.Component {
   }
 
   render() {
-    if (this.props.post)
+    if (this.props.id)
       return <div className="post-detail">
-        <h2 className="category-title text-center">{this.props.match.params.category}</h2>
+        <CategoryTitle title={this.props.match.params.category} />
         <div className="post-section">
-          <h1>{this.props.post.title}</h1>
-          <p className="post-body">{this.props.post.body}</p>
+          <h1>{this.props.title}</h1>
+          <p className="post-info">info</p> 
+          <p className="post-body">{this.props.body}</p>
           <div className="comments-section">
             <p>Comments here</p>
           </div>
@@ -26,7 +28,7 @@ class PostDetail extends React.Component {
 const mapStateToProps = ({ posts }, { match }) => {
   const post = posts.byId[match.params.post_id]
   return {
-    post
+    ...post
   }
 }
 

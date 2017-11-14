@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { objectToArray } from '../helpers/functions';
-import { Link } from 'react-router-dom';
 import { Media, Nav, NavItem } from 'react-bootstrap';
+import Post from './Post';
 
 export const PostList = (props) => {
   return <div>
@@ -14,12 +14,7 @@ export const PostList = (props) => {
     <br/>
     <Media.List className="posts-list-body">
       {props.posts.map((post, i) =>
-          <Media.ListItem key={i} className="post-item">
-            <Link key={post.id} to={`/${post.category}/${post.id}`}>
-            <Media.Heading className="post-title">{post.title}</Media.Heading>
-            </Link>
-            <Media.Body>{post.body}</Media.Body>
-          </Media.ListItem>
+        <Post key={i} {...post}/>
       )}
     </Media.List>
   </div>
