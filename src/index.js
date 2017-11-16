@@ -12,11 +12,12 @@ import { logger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import categories from './reducers/categories';
 import posts from './reducers/posts';
+import comments from './reducers/comments';
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const rootReducer =  combineReducers({ categories, posts, router: routerReducer });
+const rootReducer =  combineReducers({ categories, posts, comments, router: routerReducer });
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history); 

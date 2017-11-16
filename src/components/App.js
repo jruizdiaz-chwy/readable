@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router';
 import Home from './Home';
 import Category from './Category';
@@ -12,8 +12,8 @@ const App = (props) => {
       <Home>
         <Route exact path="/" component={PostList} />
         <Route exact path="/:category" component={Category} />
-        <Route exact path="/:category/:post_id" component={PostDetail} />
-        <Route exact path="/:category/:post_id/edit" component={EditPost} />
+        <Route exact path="/:category/:postId" component={PostDetail} />
+        <Route exact path="/:category/:postId/edit" component={EditPost} />
       </Home>
     </div>
   )

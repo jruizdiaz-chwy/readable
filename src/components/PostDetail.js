@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { fetchPostById } from '../actions/posts'
 import CategoryTitle from './CategoryTitle';
+import CommentSection from './CommentSection';
+
 
 class PostDetail extends React.Component {
   componentDidMount() {
-    this.props.fetchPostById(this.props.match.params.post_id);
+    this.props.fetchPostById(this.props.match.params.postId);
   }
 
   render() {
@@ -14,10 +17,11 @@ class PostDetail extends React.Component {
         <CategoryTitle title={this.props.match.params.category} />
         <div className="post-section">
           <h1>{this.props.title}</h1>
-          <p className="post-info">info</p> 
+          <p className="post-info">{moment(this.props.timestamp).fromNow()} by {this.props.author}</p>
           <p className="post-body">{this.props.body}</p>
+          <br />
           <div className="comments-section">
-            <p>Comments here</p>
+            <CommentSection postId={this.props.match.params.postId}/>
           </div>
         </div>
       </div>
@@ -26,7 +30,7 @@ class PostDetail extends React.Component {
 }
 
 const mapStateToProps = ({ posts }, { match }) => {
-  const post = posts.byId[match.params.post_id]
+  const post = posts.byId[match.params.postId];
   return {
     ...post
   }

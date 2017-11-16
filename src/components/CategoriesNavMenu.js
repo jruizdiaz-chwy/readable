@@ -40,7 +40,7 @@ const mapStateToProps = ({ categories }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   goHome: () => dispatch(push('/')),
-  goToCategory: (name) => dispatch(push(name))
+  goToCategory: (name) => dispatch(push(`/${name}`))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesNavMenu);

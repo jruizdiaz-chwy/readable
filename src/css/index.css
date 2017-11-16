@@ -206,3 +206,20 @@ body {
   margin-left: 5px;
 }
 
+.post-info, .comment-info {
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.comments-panel {
+  border: none;
+}
+
+.comments-panel .panel-heading {
+  background: #FFF;
+  border: none;
+}
+
+.comment-body {
+  font-size: 15px;
+}

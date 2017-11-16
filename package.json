@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "history": "^4.7.2",
+    "moment": "^2.19.2",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
