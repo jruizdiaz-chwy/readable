@@ -13,12 +13,10 @@ class PostList extends Component {
   }
 
   render() {
-    
     return <div>
       <Nav bsStyle="tabs" className="post-tabs" activeKey="1">
         <NavItem eventKey="1">Recent</NavItem>
         <NavItem eventKey="2">Top Rated</NavItem>
-        <NavItem eventKey="3">Hot</NavItem>
       </Nav>
       <br />
       <Media.List className="posts-list-body">
@@ -36,6 +34,5 @@ const mapStateToProps = ({ categories, posts }, ownProps) => {
     posts: objectToArray(posts.byId)
   }
 }
-
 
 export default connect(mapStateToProps, {})(PostList);

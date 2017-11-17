@@ -193,9 +193,19 @@ body {
   padding: 0 15px;
 }
 
-.post-title {
+.post-title a {
   text-decoration: none;
   color: black;
+}
+
+.post-title a:hover {
+  text-decoration: none;
+  color: #19A196;
+}
+
+.post-title a:active {
+  text-decoration: none;
+  color: #19A196;;
 }
 
 .post-item {
@@ -222,4 +232,16 @@ body {
 
 .comment-body {
   font-size: 15px;
+}
+
+.vote-score svg{
+  margin-left: 5px;
+}
+
+.upvote:hover {
+  color: #19A196;
+}
+
+.downvote:hover {
+  color: rgb(252, 67, 67)
 }

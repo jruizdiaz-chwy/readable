@@ -1,5 +1,6 @@
 export const fetchHeader = {
   headers: {
-    "Authorization": "none"
+    "Authorization": "none",
+    "Content-Type": "application/json"
   }
 }
