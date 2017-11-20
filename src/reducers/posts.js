@@ -1,5 +1,6 @@
 //@ts-check
-import { FETCH_ALL_POSTS, RECEIVE_ALL_POSTS, FETCH_POST_BY_ID, RECEIVE_POST_BY_ID } from '../actions/posts';
+import { FETCH_ALL_POSTS, RECEIVE_ALL_POSTS, FETCH_POST_BY_ID, 
+  RECEIVE_POST_BY_ID, UPVOTE_POST, DOWNVOTE_POST } from '../actions/posts';
 
 const initialState = { isLoading: false, byId: {}, allIds: [] }
 
@@ -29,12 +30,22 @@ const posts = (state = initialState, action) => {
       isLoading: true
     }
     case RECEIVE_POST_BY_ID:
-      byId[action.id] = action.post;
+      byId[action.post.id] = action.post;
       allIds = [ ...allIds, action.id];
     return {
       byId,
       allIds,
       isLoading: false
+    }
+    case UPVOTE_POST:
+    return {
+      ...state,
+      isLoading: true
+    }
+    case DOWNVOTE_POST:
+    return {
+      ...state,
+      isLoading: true
     }
     default: return state;
   }
