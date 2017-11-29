@@ -4,19 +4,23 @@ import { connect } from 'react-redux';
 import Comment from './Comment';
 import { objectToArray } from '../helpers/functions';
 import { fetchCommentsByPostId } from '../actions/comments';
+import NewCommentButton from './NewCommentButton';
 
 class CommentSection extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchCommentsByPostId(this.props.postId);
   }
 
   render() {
     const { comments } = this.props;
-    return <Panel collapsible header={`${comments.length} Comments`} className="comments-panel">
-      {comments.map((c, i) => 
-        <Comment key={i} {...c}/>
-      )}
-    </Panel>
+    return <div>
+      <Panel collapsible header={`${comments.length} comments`} className="comments-panel">
+        {comments.map((c, i) =>
+          <Comment key={i} {...c} />
+        )}
+      </Panel>
+      <NewCommentButton parentId={this.props.postId}/>
+    </div>
   }
 }
 
@@ -28,7 +32,7 @@ const mapStateToProps = ({ comments }, { postId }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCommentsByPostId: (postId) => {dispatch(fetchCommentsByPostId(postId))}
+  fetchCommentsByPostId: (postId) => { dispatch(fetchCommentsByPostId(postId)) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentSection);

@@ -1,6 +1,6 @@
 //@ts-check
-import { FETCH_COMMENTS_BY_POST, RECEIVE_COMMENTS_BY_POST,
-  RECIVE_COMMENT_BY_ID, UPVOTE_COMMENT, DOWNVOTE_COMMENT } from '../actions/comments';
+import { FETCH_COMMENTS_BY_POST, RECEIVE_COMMENTS_BY_POST, RECIVE_COMMENT_BY_ID,
+   UPVOTE_COMMENT, DOWNVOTE_COMMENT, POST_COMMENT, DELETE_COMMENT, UPDATE_COMMENT } from '../actions/comments';
 
 const initialState = { isLoading: false, byId: {}, allIds: [] }
 
@@ -24,8 +24,26 @@ const comments = (state = initialState, action) => {
         isLoading: false
       }
     case RECIVE_COMMENT_BY_ID:
-      byId[action.comment.id] = action.comment
+      byId[action.comment.id] = action.comment;
       allIds = Object.keys(byId);
+      return {
+        byId,
+        allIds,
+        isLoading: false
+      }
+    case POST_COMMENT:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case UPDATE_COMMENT:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case DELETE_COMMENT:
+      byId[action.id] = null;
+      allIds = allIds.filter(id => id !== action.id);
       return {
         byId,
         allIds,
