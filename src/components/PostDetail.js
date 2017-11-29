@@ -1,43 +1,95 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { fetchPostById } from '../actions/posts'
+import { fetchPostById, votePost, deletePost, editPost } from '../actions/posts'
 import CategoryTitle from './CategoryTitle';
 import CommentSection from './CommentSection';
-
+import VoteScore from './VoteScore';
+import ControlsDropup from './ControlsDropup';
+import PostForm from './PostForm';
+import NewPostButton from './NewPostButton';
 
 class PostDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showEditForm: false
+    }
+  }
+
   componentDidMount() {
     this.props.fetchPostById(this.props.match.params.postId);
   }
 
+  handleShowEditForm = () => {
+    this.setState({
+      showEditForm: true
+    })
+  }
+
+  handleEditPost = (title, author, body, category) => {
+    this.props.editPost(this.props.id, title, body);
+    this.setState({
+      showEditForm: false
+    });
+  }
+
+  handleDeletePost = (id) => () => {
+    this.props.deletePost(id)
+  }
+
+  handleCancel = () => {
+    this.setState({
+      showEditForm: false
+    });
+  }
+
   render() {
-    if (this.props.id)
-      return <div className="post-detail">
-        <CategoryTitle title={this.props.match.params.category} />
+    const { id, timestamp, title, author, body, votePost, voteScore } = this.props;
+    const { postId, category } = this.props.match.params;
+    if (id) return <div className="post-detail">
+        <CategoryTitle category={category} >
+          <NewPostButton category={category} />
+        </CategoryTitle>
         <div className="post-section">
-          <h1>{this.props.title}</h1>
-          <p className="post-info">{moment(this.props.timestamp).fromNow()} by {this.props.author}</p>
-          <p className="post-body">{this.props.body}</p>
+          <h1>{title}</h1>
+          <div className="post-info vertical-center">
+            <ControlsDropup onEdit={this.handleShowEditForm} onDelete={this.handleDeletePost(id)} />
+            {moment(timestamp).fromNow()} by {author}
+            <VoteScore id={id} score={voteScore} vote={votePost} />
+          </div>
+          <p className="post-body">{body}</p>
           <br />
           <div className="comments-section">
-            <CommentSection postId={this.props.match.params.postId}/>
+            <CommentSection postId={postId} />
           </div>
         </div>
+        <PostForm 
+        show={this.state.showEditForm} 
+        category={category} 
+        onCancel={this.handleCancel}
+        onSubmit={this.handleEditPost}
+        {...{ title, author, body }} />
       </div>
-    else return null;
+    else return <div className="post-detail">
+      <CategoryTitle category={category} />
+      <div className="post-section">
+        <h1>Ups! Seems like this post has been deleted..</h1>
+      </div>
+    </div>
   }
 }
 
 const mapStateToProps = ({ posts }, { match }) => {
   const post = posts.byId[match.params.postId];
-  return {
-    ...post
-  }
+  return post ? post : {};
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPostById: (id) => dispatch(fetchPostById(id))
+  fetchPostById: (id) => dispatch(fetchPostById(id)),
+  editPost: (id, title, body) => dispatch(editPost(id, title, body)),
+  deletePost: (id) => dispatch(deletePost(id)),
+  votePost: (id, option) => dispatch(votePost(id, option))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Media } from 'react-bootstrap';
 import moment from 'moment';
 import VoteScore from './VoteScore';
-import { vote } from '../actions/posts'
+import { votePost } from '../actions/posts'
 
 const Post = (props) => {
   return <Media.ListItem className="post-item">
@@ -12,16 +12,17 @@ const Post = (props) => {
       <Link key={props.id} to={`/${props.category}/${props.id}`}>
         {props.title}
       </Link>
-      <VoteScore id={props.id} score={props.voteScore} vote={props.vote} />
-      <p className="post-info">{moment(props.timestamp).fromNow()} by {props.author}</p>
+      <div className="post-info vertical-center">
+        {moment(props.timestamp).fromNow()} by {props.author}
+        <VoteScore id={props.id} score={props.voteScore} vote={props.votePost} />
+      </div>
     </Media.Heading>
-
     {/* <Media.Body>{props.body}</Media.Body> */}
   </Media.ListItem>
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  vote: (id, option) => dispatch(vote(id, option)),
+  votePost: (id, option) => dispatch(votePost(id, option)),
 })
 
 export default connect(null, mapDispatchToProps)(Post);

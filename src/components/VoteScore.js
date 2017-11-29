@@ -4,15 +4,14 @@ import FaArrowUp from 'react-icons/lib/fa/arrow-up'
 import FaArrowDown from 'react-icons/lib/fa/arrow-down'
 import { Badge } from 'react-bootstrap'
 
-
 const VoteScore = (props) => {
   return (
-    <span className="vote-score">
-      <Stars />
+    <div className="vote-score vertical-center">
+      <h4><Stars /></h4>
       <Badge>{props.score}</Badge>
-      <FaArrowUp className="upvote" onClick={() => props.vote(props.id, "upVote")} />
-      <FaArrowDown className="downvote" onClick={() => props.vote(props.id, "downVote")} />
-    </span>
+      <h4><FaArrowUp className="upvote" onClick={() => props.vote(props.id, "upVote")} /></h4>
+      <h4><FaArrowDown className="downvote" onClick={() => props.vote(props.id, "downVote")} /></h4>
+    </div>
   )
 }
 

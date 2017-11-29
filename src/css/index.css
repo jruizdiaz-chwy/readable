@@ -10,7 +10,25 @@ body {
   font-weight: 400;
 }
 
-.App-header {
+.root-row {
+  margin: 0;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+.content-body {
+  padding: 0;
+}
+
+.app-header {
   background-color: #19A196;
   height: 45px;
   color: white;
@@ -33,41 +51,66 @@ body {
   color: #FFF;
 }
 
-.categories-menu-title{
-  margin-bottom: 0px;
-}
-
-.category-title {
-  margin: 0;
-  width: calc(100% + 15px);
-  font-size: 25px;
-  font-weight: 300;
-  color: #FFF;
-  background-color: rgb(66, 66, 66);
-}
-
-.navbar-container {
-  height: 45px;
-}
-
-.navbar-container .container {
+.sidebar {
   padding: 0;
+
 }
 
-.navbar-header {
-  padding-left: 15px;
+@media (min-width: 768px){
+  .container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .navbar-collapse {
+    width:  75%;
+    margin: 0;
+  }
 }
 
-.navbar-collapse {
-  padding: 0;
+@media (min-width: 992px) {
+  .sidebar{
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    display: block;
+  }
+
+  .navbar-container{
+    padding: 0;
+    height: 100%;
+    margin: 0;
+  }
+
+  .navbar-container .container{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar-header {
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .navbar-collapse {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .navbar-nav li{
+    width: 100%;
+  }
 }
 
-.navbar-nav {
-  padding: 0;
+.nav-stacked {
+  width: 100%;
 }
 
 .navbar-collapse li {
-  width: 100%;
   color: #777;
 }
 
@@ -75,114 +118,85 @@ body {
   background-color: rgb(190, 190, 190)
 }
 
+.categories-menu-title{
+  margin-bottom: 0px;
+}
+
+.category-title {
+  height: 44px;
+  background-color: rgb(66, 66, 66);
+  order: 1;
+}
+
+.category-title h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 300;
+  color: #FFF;
+  order: 1;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .new-post-button {
-  margin-top: 15px;
-  margin-bottom: 5px;
-  width: 80%;
+  order: 2;
 }
 
-.new-post-button:active {
+.new-post-button>button,
+.new-post-button>button:active,
+.new-post-button>button:focus,
+.new-post-button>button:visited {
+  width: 100px;
+  margin-right: 5px;
   color: #FFF;
-  background-color: #19A196;
+  background-color: rgb(66, 66, 66);
+  border-color: #CCC;
+  outline: none;
 }
 
-.new-post-button:hover {
-  color: #FFF;
-  background-color: #19A196;
-}
-
-.new-post-button:visited {
+.new-post-button>button:hover {
+  width: 100px;
+  margin-right: 5px;
   color: #000;
   background-color: #FFF;
 }
 
-@media (max-width: 1250px) {
-  .new-post-button {
-    width: 94px;
-  }
+.button:active {
+  color: #000;
+  background-color: #FFF;
 }
 
-@media (min-width: 950px) { 
-  .content-body {
-    position: absolute;
-    width: calc(85% + 10px);
-    top: 45px;
-    margin-left: calc(15% - 10px);
-  }
-
-  .categories-menu-title {
-    width: 100%;
-  }
-
-  .navbar {
-    margin: 0;
-    position: absolute;
-    height: calc(100% - 45px);
-    width: calc(15% - 10px);
-    border-right: 1px solid #B4B4B4;
-    border-radius: 0;
-  }
-
-  .navbar-nav {
-    width: 100%;
-  }
-
-  .navbar .container {
-    width: 100%;
-    height: 40px;
-  }
-
-  .category-title {
-    margin: 0;
-    width: 100%;
-  }
+.button:active,
+.button:visited {
+  color: #000;
+  background-color: #FFF;
+  border-color: #000
 }
 
-@media (max-width: 950px) {
-  .navbar {
-    height: 100%;
-    margin-bottom: 10px;
-  }
-  .navbar-header {
-    float: none;
-  }
-  .navbar-left, .navbar-right {
-    float: none !important;
-  }
-  .navbar-toggle {
-    display: block;
-  }
-  .navbar-collapse {
-    border-top: 1px solid transparent;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-  .navbar-fixed-top {
-    top: 0;
-    border-width: 0 0 1px;
-  }
-  .navbar-collapse.collapse {
-    display: none!important;
-  }
-  .navbar-nav {
-    float: none!important;
-    margin-top: 7.5px;
-  }
-  .navbar-nav>li {
-    float: none;
-  }
-  .navbar-nav>li>a {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .collapse.in{
-    display:block !important;
-  }
-  .container {
-    width: 100%;
-  }
-  .new-post-button {
-    width: 80%;
-  }
+.nav-tabs {
+  background-color: rgb(66, 66, 66);
+  border-bottom: 1px solid rgb(66,66,66);
+  order: 0;
+}
+
+.nav-tabs>li>a {
+  color: #FFF;
+  border: rgb(66, 66, 66);
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li>a:hover,
+.nav-tabs>li>a:focus,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+  color: #19A196;
+  background-color: rgb(66, 66, 66);
+  border: rgb(66, 66, 66);
+  outline: none !important;
 }
 
 .posts-list-body {
@@ -193,32 +207,31 @@ body {
   padding: 0 15px;
 }
 
+.post-detail>.category-title>h2 {
+  width: 100%;
+}
+
 .post-title a {
   text-decoration: none;
   color: black;
 }
 
-.post-title a:hover {
+.post-title a:hover,
+.post-title a:active  {
   text-decoration: none;
   color: #19A196;
-}
-
-.post-title a:active {
-  text-decoration: none;
-  color: #19A196;;
 }
 
 .post-item {
   margin-bottom: 30px;
 }
 
-.vote-score {
-  margin-left: 5px;
-}
-
 .post-info, .comment-info {
+  display: flex;
   font-size: 13px;
   font-weight: 300;
+  justify-content: flex-start;
+  margin-bottom: 5px;
 }
 
 .comments-panel {
@@ -230,8 +243,42 @@ body {
   border: none;
 }
 
+.form-text-input {
+  width: 250px;
+}
+
+.form-label {
+  font-size: 14px;
+  margin: 5px 15px 0px 25px;
+}
+
+.form-textarea {
+  margin-left: 20px;
+  width: 50%;
+}
+
+.title-input {
+  width: 100%;
+}
+
+textarea.post-textarea-input.form-control {
+  height: 300px;
+}
+
 .comment-body {
   font-size: 15px;
+  margin-left: 10px;
+}
+
+.vote-score {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.vote-score h4{
+  margin: 0;
 }
 
 .vote-score svg{
@@ -245,3 +292,26 @@ body {
 .downvote:hover {
   color: rgb(252, 67, 67)
 }
+
+.controls-dropup h4 {
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.controls-dropup a,
+.controls-dropup a:visited {
+  color: #000;
+}
+
+.controls-dropup a:hover,
+.controls-dropup a:focus,
+.controls-dropup a:active {
+  color: #19A196;
+  outline: none;
+}
+
+.cancel-button,
+.form-button  {
+  margin-left: 15px;
+}
+

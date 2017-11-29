@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FaSmileO from 'react-icons/lib/fa/smile-o';
 
 const CategoryTitle = (props) => {
-  return <h2 className="category-title text-center">{props.title}</h2>
+  return <div className="category-title vertical-center text-center">
+    {props.children}
+    <h2>
+      {props.category? props.category : <FaSmileO />}
+    </h2>
+  </div>
 }
 
 CategoryTitle.propTypes = {
-  title: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
 }
 
 export default CategoryTitle;

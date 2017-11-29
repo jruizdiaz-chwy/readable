@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { push } from 'react-router-redux'
 import { objectToArray } from '../helpers/functions';
 
@@ -24,9 +24,6 @@ export const CategoriesNavMenu = (props) => {
             </NavItem>
           )}
         </Nav>
-        <div className="text-center">
-          <Button className="new-post-button ">New Post</Button>
-        </div>
       </Navbar.Collapse>
     </Navbar>
   );
