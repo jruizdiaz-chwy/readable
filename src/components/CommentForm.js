@@ -17,8 +17,8 @@ class CommentForm extends Component {
     this.state = {
       body: this.props.body ? this.props.body : '',
       author: this.props.author ? this.props.author : '',
-      bodyValid: null,
-      authorValid: null,
+      bodyValid: this.props.body ? 'success' : null,
+      authorValid: this.props.author ? 'success' : null,
       formIsValid: false,
       isMobile: false
     }
@@ -128,7 +128,7 @@ class CommentForm extends Component {
             <Button onClick={() => this.handleComment()} className="form-button">
               Comment
             </Button>
-              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button">
+              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
                 Cancel
             </Button>
           </div>

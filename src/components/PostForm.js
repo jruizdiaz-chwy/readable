@@ -23,9 +23,9 @@ class PostForm extends Component {
       title: this.props.title ? this.props.title : '',
       author: this.props.author ? this.props.author : '',
       category: this.props.category ? this.props.category : '',
-      bodyValid: null,
-      titleValid: null,
-      authorValid: null,
+      bodyValid: this.props.body ? 'success' : null,
+      titleValid: this.props.title ? 'success' : null,
+      authorValid: this.props.author ? 'success' : null,
       categoryValid: this.props.category ? 'success' : null,
       formIsValid: false
     }
