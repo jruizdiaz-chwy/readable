@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import VoteScore from './VoteScore';
@@ -6,6 +7,12 @@ import { vote, editComment, deleteComment } from '../actions/comments';
 import ControlsDropup from './ControlsDropup';
 import CommentForm from './CommentForm';
 
+/**
+ * @description Renders a comment and it's associated data, and shows a form when editing the comment. 
+ * @constructor
+ * @extends React.Component.
+ * @param {*} props An object with a function to get all the categories, and another to get all the posts.
+ */
 class Comment extends Component {
   constructor(props){
     super(props);
@@ -14,37 +21,49 @@ class Comment extends Component {
     }
   }
 
+  /**
+ * @description Hides the comment and displays the form when the edit button is clicked.
+ * @return {Function}
+ */
   handleShowEditForm = () => {
     this.setState({
       showEditForm: true
     });
   }
   
-  handleCancelEdit = () => {
+  /**
+ * @description Hides the form and displays the comment when the cancel button is clicked.
+ * @return {Function}
+ */
+  handleHideForm = () => {
     this.setState({
       showEditForm: false
     });
   }
 
+ /**
+ * @description Calls the editComment function on the props object with the appropiate parameters and hides the form.
+ * @return {Function}
+ */
   handleEditComment = (id) => (author, body) => {
     this.props.editComment(id, body)
-    this.setState({
-      showEditForm: false
-    });
+    this.handleHideForm();
   }
 
+  /**
+ * @description Calls the deleteComment function on the props object with the appropiate parameters and hides the form.
+ * @return {Function}
+ */
   handleDeleteComment = (id) => () => {
     this.props.deleteComment(id);
-    this.setState({
-      showEditForm: false
-    });
+    this.handleHideForm();
   }
 
   render() {
     const { author, body } = this.props;
     return <div>
       { this.state.showEditForm 
-        ? <CommentForm onCancel={this.handleCancelEdit} onSubmit={this.handleEditComment(this.props.id)} body={body} author={author}/>
+        ? <CommentForm onCancel={this.handleHideForm} onSubmit={this.handleEditComment(this.props.id)} body={body} author={author}/>
         : [<div key={1} className="comment-info vertical-center">
         <ControlsDropup onEdit={this.handleShowEditForm} onDelete={this.handleDeleteComment(this.props.id)}/>
         {`${this.props.author} 
@@ -55,6 +74,14 @@ class Comment extends Component {
       }
       </div>
   }
+}
+
+Comment.propTypes = {
+  id: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  voteScore: PropTypes.number.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => ({

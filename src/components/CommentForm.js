@@ -1,64 +1,141 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Form, Button,
-  FormGroup, FormControl,
-  ControlLabel
+  FormGroup, FormControl
 } from 'react-bootstrap';
 
+/**
+ * @description Renders a form to edit or create a comment. 
+ * @constructor
+ * @extends React.Component.
+ * @param {object} props An object including the comment's body and author to prepopulate the form in case of editing.
+ */
 class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       body: this.props.body ? this.props.body : '',
-      author: this.props.author ? this.props.author : ''
+      author: this.props.author ? this.props.author : '',
+      bodyValid: null,
+      authorValid: null,
+      formIsValid: false
     }
-    this.handleBodyChange.bind(this);
-    this.handleAuthorChange.bind(this);
-    this.handleSubmit.bind(this);
   }
 
-  handleBodyChange = (event) => {
-    this.setState({ body: event.target.value });
-  }
-
-  handleAuthorChange = (event) => {
-    this.setState({ author: event.target.value });
+  handleInputChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    }
+      , () => { this.validateInput(name, value) })
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
   }
 
+  handleComment = () => {
+    const { author, body } = this.state;
+    if (this.validateForm()) this.props.onSubmit(author, body);
+    else this.setState({ fromIsValid: false })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      authorValid: null,
+      bodyValid: null,
+      body: '',
+      author: '',
+    })
+    this.props.onCancel()
+  }
+
+  validateInput = (inputName, value) => {
+    let { titleValid, authorValid, bodyValid, categoryValid } = this.state;
+    switch (inputName) {
+      case 'title':
+        titleValid = value !== null && value !== '';
+        this.setState({ titleValid: titleValid ? 'success' : 'error' })
+        break;
+      case 'author':
+        authorValid = value !== null && value !== '';
+        this.setState({ authorValid: authorValid ? 'success' : 'error' })
+        break;
+      case 'body':
+        bodyValid = value !== null && value !== '';
+        this.setState({ bodyValid: bodyValid ? 'success' : 'error' })
+        break;
+      case 'category':
+        categoryValid = value !== null && value !== '';
+        this.setState({ categoryValid: categoryValid ? 'success' : 'error' })
+        break;
+      default:
+        break;
+    }
+  }
+
+  validateForm = () => {
+    const { authorValid, bodyValid } = this.state;
+    const formIsValid = authorValid === 'success' && bodyValid === 'success';
+    if (!formIsValid) {
+      const { title, author, body, category } = this.state;
+      this.setState({
+        authorValid: author === '' ? 'error' : authorValid,
+        bodyValid: body === '' ? 'error' : bodyValid
+      })
+    }
+    return formIsValid;
+  }
+
   render() {
+    const { authorValid, bodyValid, author, body } = this.state;
     return <Form horizontal onSubmit={this.handleSubmit}>
-      <FormGroup controlId="formControlsText" className="flex-container">
+      <FormGroup
+        controlId="formControlsText"
+        className="flex-container"
+        validationState={authorValid}
+      >
         <div className="form-label" >
           Author
         </div>
         <FormControl
+          name="author"
           className="form-text-input"
           disabled={this.props.author}
           type="text"
-          value={this.state.author}
-          onChange={this.handleAuthorChange} />
-        <Button onClick={() => this.props.onSubmit(this.state.author, this.state.body)} className="form-button">
+          value={author}
+          onChange={this.handleInputChange} />
+        <Button onClick={() => this.handleComment()} className="form-button">
           Comment
         </Button>
-        <Button bsStyle="danger" onClick={() => this.props.onCancel()} className="cancel-button">
+        <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button">
           Cancel
         </Button>
       </FormGroup>
-      <FormGroup controlId="formControlsTextarea">
+      <FormGroup
+        controlId="formControlsTextarea"
+        validationState={bodyValid}
+      >
         <div className="form-textarea">
           <FormControl
+            name="body"
             componentClass="textarea"
             placeholder="Write a comment"
-            value={this.state.body}
-            onChange={this.handleBodyChange} />
+            value={body}
+            onChange={this.handleInputChange} />
         </div>
       </FormGroup>
     </Form>
   }
+}
+
+CommentForm.propTypes = {
+  author: PropTypes.string,
+  body: PropTypes.string,
+  onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 }
 
 export default CommentForm;
