@@ -7,6 +7,12 @@ import CategoryTitle from './CategoryTitle';
 import PostOrderTabs from './PostOrderTabs';
 import NewPostButton from './NewPostButton';
 
+/**
+ * @description Renders a list of posts from any or a selected category. 
+ * @constructor
+ * @extends React.Component.
+ * @param {object} props An object with all the posts of any or a selected category.
+ */
 class PostList extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +21,11 @@ class PostList extends Component {
     }
   }
 
+  /**
+ * @description Renders a list of posts from any or a selected category. 
+ * @extends React.Component.
+ * @param {number} showOrderKey A number that indicates the order criteria (1 for top rated first, 2 for most recent first).
+ */
   handleSelect = (showOrderKey) => {
     this.setState({
       showOrderKey
@@ -29,7 +40,7 @@ class PostList extends Component {
     return <div>
       <CategoryTitle category={ category } >
         <PostOrderTabs showOrderKey={this.state.showOrderKey} handleSelect={this.handleSelect} />
-        <NewPostButton category={this.props.match.params.category} />
+        <NewPostButton category={this.props.match.params.category || ''} />
       </CategoryTitle>
       <br />
       <Media.List className="posts-list-body">
