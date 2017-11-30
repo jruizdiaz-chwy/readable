@@ -19,8 +19,24 @@ class CommentForm extends Component {
       author: this.props.author ? this.props.author : '',
       bodyValid: null,
       authorValid: null,
-      formIsValid: false
+      formIsValid: false,
+      isMobile: false
     }
+  }
+
+  componentDidMount() {
+    this.updateIsMobile();
+    window.addEventListener("resize", this.updateIsMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateIsMobile);
+  }
+
+  updateIsMobile = () => {
+    this.setState({
+      isMobile: window.innerWidth < 768
+    })
   }
 
   handleInputChange = (event) => {
@@ -80,7 +96,7 @@ class CommentForm extends Component {
     const { authorValid, bodyValid } = this.state;
     const formIsValid = authorValid === 'success' && bodyValid === 'success';
     if (!formIsValid) {
-      const { title, author, body, category } = this.state;
+      const { author, body } = this.state;
       this.setState({
         authorValid: author === '' ? 'error' : authorValid,
         bodyValid: body === '' ? 'error' : bodyValid
@@ -94,7 +110,7 @@ class CommentForm extends Component {
     return <Form horizontal onSubmit={this.handleSubmit}>
       <FormGroup
         controlId="formControlsText"
-        className="flex-container"
+        className="form-flex-container"
         validationState={authorValid}
       >
         <div className="form-label" >
@@ -107,12 +123,16 @@ class CommentForm extends Component {
           type="text"
           value={author}
           onChange={this.handleInputChange} />
-        <Button onClick={() => this.handleComment()} className="form-button">
-          Comment
-        </Button>
-        <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button">
-          Cancel
-        </Button>
+        {
+          !this.state.isMobile && <div>
+            <Button onClick={() => this.handleComment()} className="form-button">
+              Comment
+            </Button>
+              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button">
+                Cancel
+            </Button>
+          </div>
+        }
       </FormGroup>
       <FormGroup
         controlId="formControlsTextarea"
@@ -127,6 +147,16 @@ class CommentForm extends Component {
             onChange={this.handleInputChange} />
         </div>
       </FormGroup>
+      {
+          this.state.isMobile && <div className="form-flex-container">
+              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
+                Cancel
+            </Button>
+            <Button onClick={() => this.handleComment()} className="form-button">
+              Comment
+            </Button>
+          </div>
+        }
     </Form>
   }
 }

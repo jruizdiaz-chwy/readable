@@ -9,23 +9,33 @@ import NewPostButton from './NewPostButton';
 
 /**
  * @description Renders a list of posts from any or a selected category. 
- * @constructor
  * @extends React.Component.
- * @param {object} props An object with all the posts of any or a selected category.
+ * @param {object} props An object with: a number key that indicates the order criteria (1 for top rated first, 
+ * 2 for most recent first) and a boolean that determines wheter the viewport is mobile or not.
  */
 class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showOrderKey: 1
+      showOrderKey: 1,
+      isMobile: false
     }
+    this.updateIsMobile.bind(this);
   }
 
-  /**
- * @description Renders a list of posts from any or a selected category. 
- * @extends React.Component.
- * @param {number} showOrderKey A number that indicates the order criteria (1 for top rated first, 2 for most recent first).
- */
+  componentDidMount() {
+    this.updateIsMobile();
+    window.addEventListener("resize", this.updateIsMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateIsMobile);
+  }
+
+  updateIsMobile = () => {
+    this.setState({ isMobile: window.innerWidth < 768 })
+  }
+
   handleSelect = (showOrderKey) => {
     this.setState({
       showOrderKey
@@ -40,7 +50,7 @@ class PostList extends Component {
     return <div>
       <CategoryTitle category={ category } >
         <PostOrderTabs showOrderKey={this.state.showOrderKey} handleSelect={this.handleSelect} />
-        <NewPostButton category={this.props.match.params.category || ''} />
+        { !this.state.isMobile && <NewPostButton category={this.props.match.params.category || ''} /> }
       </CategoryTitle>
       <br />
       <Media.List className="posts-list-body">

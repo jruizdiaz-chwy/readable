@@ -20,12 +20,25 @@ class PostDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showEditForm: false
+      showEditForm: false,
+      isMobile: false
     }
   }
 
   componentDidMount() {
     this.props.fetchPostById(this.props.match.params.postId);
+    this.updateIsMobile();
+    window.addEventListener("resize", this.updateIsMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateIsMobile);
+  }
+
+  updateIsMobile = () => {
+    this.setState({
+      isMobile: window.innerWidth < 768
+    })
   }
 
   handleShowEditForm = () => {
@@ -54,7 +67,7 @@ class PostDetail extends React.Component {
     const { postId, category } = this.props.match.params;
     if (id) return <div className="post-detail">
         <CategoryTitle category={category} >
-          <NewPostButton category={category} />
+          { !this.state.isMobile && <NewPostButton category={category} /> }
         </CategoryTitle>
         <div className="post-section">
           <h1>{title}</h1>

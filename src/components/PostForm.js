@@ -107,8 +107,8 @@ class PostForm extends Component {
   }
 
   render() {
-    const { title, author, body, category, titleValid,
-      authorValid, bodyValid, categoryValid, formIsValid } = this.state
+    const { title, author, body, titleValid,
+      authorValid, bodyValid, categoryValid } = this.state
     return <Modal show={this.props.show} bsSize="large" className="new-post-modal">
       <Modal.Header>
         <Modal.Title>{this.props.heading}</Modal.Title>
@@ -120,7 +120,7 @@ class PostForm extends Component {
               <Col md={12}>
                 <FormGroup
                   controlId="formControlsText"
-                  className="flex-container"
+                  className="form-flex-container"
                   validationState={titleValid}
                 >
                   <div className="form-label" >
@@ -128,7 +128,7 @@ class PostForm extends Component {
                   </div>
                   <FormControl
                     name="title"
-                    className="form-text-input title-input"
+                    className="title-input"
                     type="text"
                     value={title}
                     onChange={this.handleInputChange} />
@@ -137,7 +137,7 @@ class PostForm extends Component {
               <Col md={6}>
                 <FormGroup
                   controlId="formControlsText"
-                  className="flex-container"
+                  className="form-flex-container"
                   validationState={categoryValid}>
                   <div className="form-label" >
                     Category
@@ -159,7 +159,7 @@ class PostForm extends Component {
               <Col md={6}>
                 <FormGroup
                   controlId="formControlsText"
-                  className="flex-container"
+                  className="form-flex-container"
                   validationState={authorValid}
                 >
                   <div className="form-label" >
@@ -193,7 +193,7 @@ class PostForm extends Component {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button pull-left">
+        <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button pull-left">
           Cancel
         </Button>
         <Button onClick={() => this.handlePost()} className="form-button">
