@@ -6,6 +6,12 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Title from './Title';
 import CategoriesNavMenu from './CategoriesNavMenu'
 
+/**
+ * @description Renders a list of posts from any or a selected category. 
+ * @constructor
+ * @extends React.Component.
+ * @param {*} props An object with a function to get all the categories, and another to get all the posts.
+ */
 class Home extends React.Component {
   componentDidMount() {
     this.props.fetchCategories();

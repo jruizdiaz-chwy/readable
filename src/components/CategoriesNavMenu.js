@@ -4,6 +4,13 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { push } from 'react-router-redux'
 import { objectToArray } from '../helpers/functions';
 
+/**
+ * @description Renders a menu with all the available categories. 
+ * @constructor
+ * @extends React.Component.
+ * @param {object} props An object including: the categories to list, a function to redirect to the home page, 
+ * and another function to redirect to a category post list.
+ */
 export const CategoriesNavMenu = (props) => {
   return (
     <Navbar collapseOnSelect className="nav navbar-container">

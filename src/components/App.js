@@ -4,6 +4,11 @@ import Home from './Home';
 import PostDetail from './PostDetail';
 import PostList from './PostList';
 
+/**
+ * @description Contains the app core functionality.
+ * @constructor
+ * @extends React.Component
+ */
 const App = (props) => {
   return (
     <div className="App">

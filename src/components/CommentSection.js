@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Comment from './Comment';
@@ -6,6 +7,13 @@ import { objectToArray } from '../helpers/functions';
 import { fetchCommentsByPostId } from '../actions/comments';
 import NewCommentButton from './NewCommentButton';
 
+/**
+ * @description Renders a collapsible panel that holds the post's comments. 
+ * @constructor
+ * @extends React.Component.
+ * @param {*} props An object that includes: the id of the post, an array of comments and a function to retrieve
+ * the comments of the post.
+ */
 class CommentSection extends Component {
   componentDidMount() {
     this.props.fetchCommentsByPostId(this.props.postId);
@@ -22,6 +30,10 @@ class CommentSection extends Component {
       <NewCommentButton parentId={this.props.postId}/>
     </div>
   }
+}
+
+CommentSection.propTypes = {
+  postId: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = ({ comments }, { postId }) => {

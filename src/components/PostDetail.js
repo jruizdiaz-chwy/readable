@@ -9,6 +9,13 @@ import ControlsDropup from './ControlsDropup';
 import PostForm from './PostForm';
 import NewPostButton from './NewPostButton';
 
+/**
+ * @description Renders a post's title, author, time of post and vote score in a simple format.
+ * @constructor
+ * @extends React.Component.
+ * @param {object} props An object with: id, title, author, body, category, timestamp, vote score, a function to vote on the post,
+ * a funciton to retrieve the post by id and a match object that holds the params of the url.
+ */
 class PostDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -27,21 +34,19 @@ class PostDetail extends React.Component {
     })
   }
 
-  handleEditPost = (title, author, body, category) => {
-    this.props.editPost(this.props.id, title, body);
-    this.setState({
-      showEditForm: false
-    });
-  }
-
-  handleDeletePost = (id) => () => {
-    this.props.deletePost(id)
-  }
-
   handleCancel = () => {
     this.setState({
       showEditForm: false
     });
+  }
+
+  handleEditPost = (title, author, body, category) => {
+    this.props.editPost(this.props.id, title, body);
+    this.handleCancel();
+  }
+
+  handleDeletePost = (id) => () => {
+    this.props.deletePost(id)
   }
 
   render() {
