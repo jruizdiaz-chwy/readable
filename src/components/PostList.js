@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { objectToArray } from '../helpers/functions';
-import { Media } from 'react-bootstrap';
 import Post from './Post';
 import CategoryTitle from './CategoryTitle';
 import PostOrderTabs from './PostOrderTabs';
@@ -64,8 +63,8 @@ class PostList extends Component {
 
 const mapStateToProps = ({ posts }, ownProps) => {
   let postList = objectToArray(posts.byId);
-  if (ownProps.match.params.category) 
-    postList = postList.filter(p => p.category === ownProps.match.params.category);
+  if (ownProps.match.params.category)
+    postList = postList.filter(p => (p.category === ownProps.match.params.category && p.deleted === false));
   return {
     posts: postList
   }

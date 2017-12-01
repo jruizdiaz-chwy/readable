@@ -1,24 +1,15 @@
 //@ts-check
 import { fetchHeaders } from '../helpers/functions';
 import { uuid4 } from '../helpers/functions';
-
-//ACTION TYPES
-export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
-export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
-export const FETCH_POST_BY_ID = 'FETCH_POST_BY_ID';
-export const RECEIVE_POST_BY_ID = 'RECEIVE_POST_BY_ID';
-export const ADD_POST = 'ADD_POST';
-export const UPDATE_POST = 'UPDATE_POST';
-export const DELETE_POST = 'DELETE_POST';
-export const UPVOTE_POST = 'UPVOTE_POST';
-export const DOWNVOTE_POST = 'DOWNVOTE_POST';
+import { FETCH_ALL_POSTS, RECEIVE_ALL_POSTS, FETCH_POST_BY_ID, RECEIVE_POST_BY_ID, 
+  UPDATE_POST, ADD_POST, DELETE_POST, UPVOTE_POST, DOWNVOTE_POST } from './types'
 
 //ACTION CREATORS
 /**
  * @description Retrieves all the posts from the API server and dispatches the corresponding redux action to update the state.
  * @return {Function}
  */
-export const fetchAllPosts = () => (dispatch, getState) => {
+export const fetchAllPosts = () => (dispatch) => {
   fetch('http://localhost:3001/posts', { headers: fetchHeaders() })
     .then(response => response.json())
     .then(posts =>
@@ -102,6 +93,7 @@ export const deletePost = (id) => (dispatch) => {
     method: 'DELETE',
     headers: fetchHeaders()
   })
+  .then(() => dispatch(fetchAllPosts()));
   dispatch({ type: DELETE_POST, id })
 }
 

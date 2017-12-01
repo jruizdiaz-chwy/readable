@@ -63,9 +63,9 @@ class PostDetail extends React.Component {
   }
 
   render() {
-    const { id, timestamp, title, author, body, votePost, voteScore } = this.props;
+    const { id, timestamp, title, author, body, votePost, voteScore, deleted } = this.props;
     const { postId, category } = this.props.match.params;
-    if (id) return <div className="post-detail">
+    if (id && !deleted) return <div className="post-detail">
         <CategoryTitle category={category} >
           { !this.state.isMobile && <NewPostButton category={category} /> }
         </CategoryTitle>
@@ -90,7 +90,9 @@ class PostDetail extends React.Component {
         {...{ title, author, body }} />
       </div>
     else return <div className="post-detail">
-      <CategoryTitle category={category} />
+      <CategoryTitle category={category} >
+          { !this.state.isMobile && <NewPostButton category={category} /> }
+        </CategoryTitle>
       <div className="post-section">
         <h1>Ups! Seems like this post has been deleted..</h1>
       </div>

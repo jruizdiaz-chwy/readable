@@ -45,8 +45,8 @@ class Comment extends Component {
  * @description Calls the editComment function on the props object with the appropiate parameters and hides the form.
  * @return {Function}
  */
-  handleEditComment = (id) => (author, body) => {
-    this.props.editComment(id, body)
+  handleEditComment = (author, body) => {
+    this.props.editComment(this.props.id, body)
     this.handleHideForm();
   }
 
@@ -54,8 +54,8 @@ class Comment extends Component {
  * @description Calls the deleteComment function on the props object with the appropiate parameters and hides the form.
  * @return {Function}
  */
-  handleDeleteComment = (id) => () => {
-    this.props.deleteComment(id);
+  handleDeleteComment = () => {
+    this.props.deleteComment(this.props.parentId, this.props.id);
     this.handleHideForm();
   }
 
@@ -63,9 +63,9 @@ class Comment extends Component {
     const { author, body } = this.props;
     return <div>
       { this.state.showEditForm 
-        ? <CommentForm onCancel={this.handleHideForm} onSubmit={this.handleEditComment(this.props.id)} body={body} author={author}/>
+        ? <CommentForm onCancel={this.handleHideForm} onSubmit={this.handleEditComment} body={body} author={author}/>
         : [<div key={1} className="comment-info vertical-center">
-        <ControlsDropup onEdit={this.handleShowEditForm} onDelete={this.handleDeleteComment(this.props.id)}/>
+        <ControlsDropup onEdit={this.handleShowEditForm} onDelete={this.handleDeleteComment}/>
         {`${this.props.author} 
         - ${moment(this.props.timestamp).fromNow()} `}
         <VoteScore id={this.props.id} score={this.props.voteScore} vote={this.props.vote} />
@@ -87,7 +87,7 @@ Comment.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   vote: (id, option) => dispatch(vote(id, option)),
   editComment: (id, body) => dispatch(editComment(id, body)),
-  deleteComment: (id) =>  dispatch(deleteComment(id))
+  deleteComment: (parentId, id) =>  dispatch(deleteComment(parentId, id))
 });
 
 export default connect(null, mapDispatchToProps)(Comment);

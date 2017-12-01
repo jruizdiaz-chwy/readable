@@ -1,11 +1,7 @@
 import { fetchHeaders } from '../helpers/functions';
-
-//ACTION TYPES
-export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+import { FETCH_CATEGORIES, RECEIVE_CATEGORIES } from './types'
 
 //ACTION CREATORS
-
 /**
  * @description Retrieves all categories from the API server and dispatches the corresponding redux action to update the state.
  * @return {Function}

@@ -2,7 +2,7 @@
 import {
   FETCH_ALL_POSTS, RECEIVE_ALL_POSTS, FETCH_POST_BY_ID, RECEIVE_POST_BY_ID,
   UPVOTE_POST, DOWNVOTE_POST, ADD_POST, DELETE_POST, UPDATE_POST
-} from '../actions/posts';
+} from '../actions/types';
 
 const initialState = { isLoading: false, byId: {}, allIds: [] }
 
@@ -50,12 +50,9 @@ const posts = (state = initialState, action) => {
         isLoading: true
       }
     case DELETE_POST:
-      byId[action.id] = null;
-      allIds = allIds.filter(id => id !== action.id);
       return {
-        byId,
-        allIds,
-        isLoading: false
+        ...state,
+        isLoading: true
       }
     case UPVOTE_POST:
       return {

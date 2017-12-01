@@ -1,5 +1,5 @@
 //@ts-check
-import { FETCH_CATEGORIES, RECEIVE_CATEGORIES } from '../actions/categories';
+import { FETCH_CATEGORIES, RECEIVE_CATEGORIES } from '../actions/types';
 
 const initialState = { isLoading: false, byId: {}, allIds: [] }
 

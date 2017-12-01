@@ -1,19 +1,10 @@
 //@ts-check
 import { fetchHeaders } from '../helpers/functions';
 import { uuid4 } from '../helpers/functions';
-
-//ACTION TYPES
-export const FETCH_COMMENTS_BY_POST = 'FETCH_COMMENTS_BY_POST';
-export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
-export const RECIVE_COMMENT_BY_ID = 'RECEIVE_COMMENT_BY_ID';
-export const POST_COMMENT = 'POST_COMMENT';
-export const UPDATE_COMMENT = 'UPDATE_COMMENT';
-export const DELETE_COMMENT = 'DELETE_COMMENT';
-export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
-export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
+import { FETCH_COMMENTS_BY_POST, RECEIVE_COMMENTS_BY_POST, RECIVE_COMMENT_BY_ID, POST_COMMENT,
+UPDATE_COMMENT, DELETE_COMMENT, UPVOTE_COMMENT, DOWNVOTE_COMMENT } from './types'
 
 //ACTION CREATORS
-
 /**
  * @description Retrieves all comments of a given post from the API server and dispatches the corresponding redux action to update the state.
  * @param {string} id The uuid of the post.
@@ -82,11 +73,12 @@ export const editComment = (id, body) => (dispatch) => {
  * @param {string} id The uuid of the comment to be deleted.
  * @return {Function}
  */
-export const deleteComment = (id) => (dispatch) => {
+export const deleteComment = (parentId, id) => (dispatch) => {
   fetch(`http://localhost:3001/comments/${id}`, { 
     method: 'DELETE',
     headers: fetchHeaders()
   })
+  .then(dispatch(fetchCommentsByPostId(parentId)));
   dispatch({ type: DELETE_COMMENT, id })
 }
 
