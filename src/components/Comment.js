@@ -77,6 +77,7 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
+  parentId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,

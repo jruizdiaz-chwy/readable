@@ -14,15 +14,17 @@ import {
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      body: this.props.body ? this.props.body : '',
-      author: this.props.author ? this.props.author : '',
-      bodyValid: this.props.body ? 'success' : null,
-      authorValid: this.props.author ? 'success' : null,
-      formIsValid: false,
-      isMobile: false
-    }
+    this.state = this.getInitialState();
   }
+
+  getInitialState = () => ({
+    body: this.props.body ? this.props.body : '',
+    author: this.props.author ? this.props.author : '',
+    bodyValid: this.props.body ? 'success' : null,
+    authorValid: this.props.author ? 'success' : null,
+    formIsValid: false,
+    isMobile: false
+  })
 
   componentDidMount() {
     this.updateIsMobile();
@@ -54,17 +56,15 @@ class CommentForm extends Component {
 
   handleComment = () => {
     const { author, body } = this.state;
-    if (this.validateForm()) this.props.onSubmit(author, body);
+    if (this.validateForm()) { 
+      this.props.onSubmit(author, body);
+      this.setState(this.getInitialState());
+    }
     else this.setState({ fromIsValid: false })
   }
 
   handleCancel = () => {
-    this.setState({
-      authorValid: null,
-      bodyValid: null,
-      body: '',
-      author: '',
-    })
+    this.setState(this.getInitialState())
     this.props.onCancel()
   }
 
@@ -128,8 +128,8 @@ class CommentForm extends Component {
             <Button onClick={() => this.handleComment()} className="form-button">
               Comment
             </Button>
-              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
-                Cancel
+            <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
+              Cancel
             </Button>
           </div>
         }
@@ -148,15 +148,15 @@ class CommentForm extends Component {
         </div>
       </FormGroup>
       {
-          this.state.isMobile && <div className="form-flex-container">
-              <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
-                Cancel
+        this.state.isMobile && <div className="form-flex-container">
+          <Button bsStyle="danger" onClick={() => this.handleCancel()} className="cancel-button form-button">
+            Cancel
             </Button>
-            <Button onClick={() => this.handleComment()} className="form-button">
-              Comment
+          <Button onClick={() => this.handleComment()} className="form-button">
+            Comment
             </Button>
-          </div>
-        }
+        </div>
+      }
     </Form>
   }
 }

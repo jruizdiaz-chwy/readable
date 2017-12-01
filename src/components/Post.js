@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import VoteScore from './VoteScore';
 import { votePost, editPost, deletePost } from '../actions/posts';
-import { fetchCommentsByPostId } from '../actions/comments';
 import { objectToArray } from '../helpers/functions';
 import ControlsDropup from './ControlsDropup';
 import PostForm from './PostForm';
@@ -22,10 +21,6 @@ class Post extends Component {
     this.state = {
       showEditForm: false,
     }
-  }
-
-  componentDidMount() {
-    this.props.fetchCommentsByPostId(this.props.id);
   }
 
   handleShowEditForm = () => {
@@ -50,13 +45,13 @@ class Post extends Component {
   }
 
   render() {
-    const { id, category, title, body, author, timestamp, voteScore, votePost, comments } = this.props;
+    const { id, category, title, body, author, timestamp, voteScore, votePost, commentCount } = this.props;
     return <div className="post-item">
       <div className="post-title">
         <Link key={id} to={`/${category}/${id}`}>
           {title}
         </Link>
-        <span className="comments-number">{` - ${comments.length} comments`}</span> 
+        <span className="comments-number">{` - ${commentCount} comments`}</span> 
       </div>
       <div className="post-info vertical-center">
         <ControlsDropup onEdit={this.handleShowEditForm} onDelete={this.handleDeletePost(id)} />
@@ -79,7 +74,8 @@ Post.propTypes = {
   author: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
-  voteScore: PropTypes.number.isRequired
+  voteScore: PropTypes.number.isRequired,
+  commentCount: PropTypes.number.isRequired
 }
 
 const mapStateToProps = ({ comments }, ownProps) => {
@@ -91,8 +87,7 @@ const mapStateToProps = ({ comments }, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   votePost: (id, option) => dispatch(votePost(id, option)),
   editPost: (id, title, body) => dispatch(editPost(id, title, body)),
-  deletePost: (id) => dispatch(deletePost(id)),
-  fetchCommentsByPostId: (postId) => dispatch(fetchCommentsByPostId(postId))
+  deletePost: (id) => dispatch(deletePost(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

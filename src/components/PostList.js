@@ -5,6 +5,7 @@ import Post from './Post';
 import CategoryTitle from './CategoryTitle';
 import PostOrderTabs from './PostOrderTabs';
 import NewPostButton from './NewPostButton';
+import { fetchAllPosts } from '../actions/posts';
 
 /**
  * @description Renders a list of posts from any or a selected category. 
@@ -23,6 +24,7 @@ class PostList extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchAllPosts();
     this.updateIsMobile();
     window.addEventListener("resize", this.updateIsMobile);
   }
@@ -47,9 +49,9 @@ class PostList extends Component {
     if (this.state.showOrderKey === 1) posts = posts.sort((a, b) => b.voteScore - a.voteScore);
     else posts = posts.sort((a, b) => b.timestamp - a.timestamp);
     return <div>
-      <CategoryTitle category={ category } >
+      <CategoryTitle category={category} >
         <PostOrderTabs showOrderKey={this.state.showOrderKey} handleSelect={this.handleSelect} />
-        { !this.state.isMobile && <NewPostButton category={this.props.match.params.category || ''} /> }
+        {!this.state.isMobile && <NewPostButton category={this.props.match.params.category || ''} />}
       </CategoryTitle>
       <br />
       <div className="posts-list-body">
@@ -70,4 +72,10 @@ const mapStateToProps = ({ posts }, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, {})(PostList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchAllPosts: () => dispatch(fetchAllPosts())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);

@@ -15,21 +15,24 @@ import { objectToArray } from '../helpers/functions';
  * @param {object} props An object with: title (optional), author (optional), body (optional), post category (optional), 
  * the list of all categories, a functiton to cancel and close the form and a function to submit and post the new data.
  */
+
 class PostForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      body: this.props.body ? this.props.body : '',
-      title: this.props.title ? this.props.title : '',
-      author: this.props.author ? this.props.author : '',
-      category: this.props.category ? this.props.category : '',
-      bodyValid: this.props.body ? 'success' : null,
-      titleValid: this.props.title ? 'success' : null,
-      authorValid: this.props.author ? 'success' : null,
-      categoryValid: this.props.category ? 'success' : null,
-      formIsValid: false
-    }
+    this.state = this.getInitialState();
   }
+
+  getInitialState = () => ({
+    body: this.props.body ? this.props.body : '',
+    title: this.props.title ? this.props.title : '',
+    author: this.props.author ? this.props.author : '',
+    category: this.props.category ? this.props.category : '',
+    bodyValid: this.props.body ? 'success' : null,
+    titleValid: this.props.title ? 'success' : null,
+    authorValid: this.props.author ? 'success' : null,
+    categoryValid: this.props.category ? 'success' : null,
+    formIsValid: false
+  })
 
   handleInputChange = (event) => {
     const name = event.target.name;
@@ -46,21 +49,15 @@ class PostForm extends Component {
 
   handlePost = () => {
     const { title, author, body, category } = this.state;
-    if (this.validateForm()) this.props.onSubmit(title, author, body, category);
+    if (this.validateForm()) { 
+      this.props.onSubmit(title, author, body, category);
+      this.setState(this.getInitialState());
+    }
     else this.setState({ fromIsValid: false })
   }
 
   handleCancel = () => {
-    this.setState({
-      titleValid: null,
-      authorValid: null,
-      categoryValid: null,
-      bodyValid: null,
-      body: '',
-      title: '',
-      author: '',
-      category: ''
-    })
+    this.setState(this.getInitialState())
     this.props.onCancel()
   }
 
@@ -199,7 +196,6 @@ class PostForm extends Component {
         <Button onClick={() => this.handlePost()} className="form-button">
           Post
         </Button>
-
       </Modal.Footer>
     </Modal>
   }
