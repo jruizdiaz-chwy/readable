@@ -38,7 +38,7 @@ class CustomToggle extends Component {
  * and an onDelete function to call when the delete button is clicked.
  */
 const ControlsDropup = (props) => {
-  return <Dropdown className="controls-dropup" dropup id="dropdown-edit">
+  return <Dropdown className="controls-dropup" id="dropdown-edit">
     <CustomToggle bsRole="toggle">
       <h4><FaEllipsisH /></h4>
     </CustomToggle>

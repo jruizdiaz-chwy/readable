@@ -53,11 +53,11 @@ class PostList extends Component {
         { !this.state.isMobile && <NewPostButton category={this.props.match.params.category || ''} /> }
       </CategoryTitle>
       <br />
-      <Media.List className="posts-list-body">
+      <div className="posts-list-body">
         {posts.map((post, i) =>
           <Post key={i} {...post} />
         )}
-      </Media.List>
+      </div>
     </div>
   }
 }

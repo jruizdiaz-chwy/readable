@@ -156,21 +156,31 @@ body {
 /* Post list */
 .posts-list-body {
  padding-left: 30px;
+ list-style-type: none;
+ display: flex;
+ flex-flow: column;
 }
 
 .post-item {
   margin-bottom: 30px;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 .post-title a {
   text-decoration: none;
   color: #000;
+  font-size: 20px;
 }
 
 .post-title a:hover,
 .post-title a:active  {
   text-decoration: none;
   color: #19a196;
+}
+
+.comments-number {
+  font-size: 15px;
 }
 
 .post-info, .comment-info {
@@ -259,6 +269,10 @@ textarea.post-textarea-input.form-control {
 }
 
 /* Controls dropup */
+.controls-dropup {
+
+}
+
 .controls-dropup h4 {
   margin-right: 10px;
   margin-left: 5px;
